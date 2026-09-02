@@ -9,7 +9,8 @@ public class DraggableMirror : MonoBehaviour
     private Plane dragPlane;
     private float rotationStep = 45f;
     private KeyCode rotateKey = KeyCode.R;
-    [SerializeField] private Coroutine shakeRoutine;
+    [SerializeField] private float keyboardRotationSpeed = 30f;
+    private Coroutine shakeRoutine;
     [SerializeField] private Color errorColor = Color.red;
     [SerializeField] private float flashDuration = 0.15f;
 
@@ -37,9 +38,23 @@ public class DraggableMirror : MonoBehaviour
     {
         if (levelFinished) return; // stop rotation input
 
-        if (isDragging && Input.GetKeyDown(rotateKey))
+        if (isDragging && Input.GetKey(rotateKey))
         {
-            RotateMirror();
+            RotateMirrorSmooth();
+        }
+    }
+
+    private void RotateMirrorSmooth()
+    {
+        Quaternion originalRotation = transform.rotation;
+
+        float rotationAmount = keyboardRotationSpeed * Time.deltaTime;
+
+        transform.Rotate(0f, rotationAmount, 0f);
+
+        if (IsOverlappingAt(transform.position))
+        {
+            transform.rotation = originalRotation;
         }
     }
 
@@ -47,6 +62,9 @@ public class DraggableMirror : MonoBehaviour
     public void RotateMirror()
     {
         if (levelFinished) return;
+
+        //if key is held down rotate piece multiple times
+
 
         Quaternion originalRotation = transform.rotation;
         transform.Rotate(0f, rotationStep, 0f);
