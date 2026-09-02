@@ -7,7 +7,7 @@ public class DraggableMirror : MonoBehaviour
     private bool isDragging = false;
     private Vector3 offset;
     private Plane dragPlane;
-    private float rotationStep = 40f;
+    private float rotationStep = 45f;
     private KeyCode rotateKey = KeyCode.R;
     [SerializeField] private float keyboardRotationSpeed = 30f;
     private Coroutine shakeRoutine;
