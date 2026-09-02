@@ -52,6 +52,12 @@ jobs:
           path: ${{ steps.tests.outputs.artifactsPath }}
           if-no-files-found: warn
 
+      - name: Restore files modified by test runner
+        run: git restore .
+
+      - name: Check repository status after tests
+        run: git status --short
+
       - name: Build Unity project
         uses: game-ci/unity-builder@v4
         env:
