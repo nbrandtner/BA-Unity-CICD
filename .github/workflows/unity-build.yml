@@ -42,7 +42,6 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           testMode: EditMode
-          coverageEnabled: false
 
       - name: Upload test results
         if: always()
